@@ -18,19 +18,13 @@ double Matriz3x3::get(unsigned i, unsigned j)
     return data[3 * i + j];
 }
 
-//Matriz3x3::operator+(Matriz3x3 &B)
-//{
-//    Matriz3x3 *result = new Matriz3x3();
-//
-//}
-
-Matriz3x3& operator+(Matriz3x3 &B)
+Matriz3x3 Matriz3x3::operator+(Matriz3x3 &B)
 {
     Matriz3x3 result = Matriz3x3();
     for (int i = 0; i < 3; i++)
         for (int j = 0; j < 3; j++)
         {
-            result.set(i, j, this.get(i, j) + B.get(i, j));
+            result.set(i, j, this->get(i, j) + B.get(i, j));
         }
     return result;
 }
