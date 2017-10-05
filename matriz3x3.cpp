@@ -1,11 +1,12 @@
 #include "matriz3x3.h"
 
-bool Matriz3x3::set(unsigned i, unsigned j, double value)
+template <class super_type>
+bool Matriz3x3<super_type>::set(unsigned i, unsigned j, super_type value)
 {
     if (i < 3 || j < 3)
     {
-        double *tmp;
-        tmp = data;
+        super_type *tmp;
+        tmp = this->data;
         tmp += 3 * i + j;
         *tmp = value;
         return true;
@@ -16,46 +17,53 @@ bool Matriz3x3::set(unsigned i, unsigned j, double value)
     }
 }
 
-double Matriz3x3::get(unsigned i, unsigned j)
+template <class super_type>
+super_type Matriz3x3<super_type>::get(unsigned i, unsigned j)
 {
-    return *(data + 3 * i + j);
+    return *(this->data + 3 * i + j);
 }
 
-Matriz3x3& Matriz3x3::operator+(Matriz3x3 &B)
+template <class super_type>
+Matriz3x3<super_type>& Matriz3x3<super_type>::operator+(Matriz3x3<super_type> &B)
 {
-    Matriz3x3 *result = new Matriz3x3();
+    Matriz3x3<super_type> *result = new Matriz3x3<super_type>();
     for (unsigned i = 0; i < 3; i++)
         for (unsigned j = 0; j < 3; j++)
         {
-            result->set(i, j, this->data[3 * i + j] + B.get(i, j));
+            result->set(i, j, *(this->data[3 * i + j]) + B.get(i, j));
         }
     return *result;
 }
 
-ostream& operator<<(ostream& o, Matriz3x3& A)
+//template <class super_type>
+//ostream& operator<<(ostream& o, Matriz3x3<super_type>& A)
+//{
+//    for (int i = 0; i < 3; i++)
+//    {
+//        o << A.get(i, 0) << "; " << A.get(i, 1) << "; " << A.get(i, 2) << std::endl;
+//    }
+//    return o;
+//}
+
+template <class super_type>
+super_type Matriz3x3<super_type>::operator!()
 {
-    for (int i = 0; i < 3; i++)
-    {
-        o << A.get(i, 0) << "; " << A.get(i, 1) << "; " << A.get(i, 2) << std::endl;
-    }
-    return o;
+//    double a = this->get(0, 0) * (this->get(1, 1) * this->get(2, 2) - this->get(1, 2) * this->get(2, 1));
+//    double b = (-1) * this->get(0, 1) * (this->get(1, 0) * this->get(2, 2) - this->get(1, 2) * this->get(2, 0));
+//    double c = this->get(0, 2) * (this->get(1, 0) * this->get(2, 1) - this->get(1, 1) * this->get(2, 0));
+//    double result = a + b + c;
+//    return result;
+    return 0;
 }
 
-double Matriz3x3::operator!()
+template <class super_type>
+Matriz3x3<super_type>::Matriz3x3(super_type *array)
 {
-    double a = this->get(0, 0) * (this->get(1, 1) * this->get(2, 2) - this->get(1, 2) * this->get(2, 1));
-    double b = (-1) * this->get(0, 1) * (this->get(1, 0) * this->get(2, 2) - this->get(1, 2) * this->get(2, 0));
-    double c = this->get(0, 2) * (this->get(1, 0) * this->get(2, 1) - this->get(1, 1) * this->get(2, 0));
-    double result = a + b + c;
-    return result;
+    this->data = array;
 }
 
-Matriz3x3::Matriz3x3(double *array)
+template <class super_type>
+Matriz3x3<super_type>::Matriz3x3()
 {
-    data = array;
-}
-
-Matriz3x3::Matriz3x3()
-{
-    data = new double[9];
+    this->data = new super_type[9];
 }

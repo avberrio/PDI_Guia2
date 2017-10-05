@@ -5,13 +5,13 @@
 
 using namespace std;
 
-class Matriz_Abstracta {
+template <class super_type> class Matriz_Abstracta {
 public:
-    virtual bool   set(unsigned i, unsigned j, double value) = 0;
-    virtual double get(unsigned i, unsigned j) = 0;
+    virtual bool   set(unsigned i, unsigned j, super_type value) = 0;
+    virtual super_type get(unsigned i, unsigned j) = 0;
     
 protected:
-    double* data;
+    super_type* data;
 };
 
 #endif // MATRIZ_ABSTRACTA
